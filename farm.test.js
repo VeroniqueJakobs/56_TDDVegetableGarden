@@ -109,16 +109,122 @@ describe("getYieldForPlant with environment factors", () => {
 
 //getYieldForCrop
 describe("getYieldForCrop", () => {
-    test("Get yield for crop, simple", () => {
+    test("Get yield for crop pumpkin without environment factors", () => {
+        const corn = {
+            name: "corn",
+            yield: 8,
+            factor: {
+                sun: {
+                    low: -70,
+                    medium: 0,
+                    high: 70,
+                },
+                wind: {
+                    low: -60,
+                    medium: 0,
+                    high: 50,
+                }
+            },
+        };
+
+        const input = {
+            crop: corn,
+            numCrops: 21,
+        };
+
+        expect(getYieldForCrop(input)).toBe(168);
+    });
+});
+
+describe("getYieldForCrop", () => {
+    test("Get yield for crop pumpkin with environment factors", () => {
+        const pumpkin = {
+            name: "pumpkin",
+            yield: 3,
+            factor: {
+                sun: {
+                    low: -80,
+                    medium: 0,
+                    high: 70,
+                },
+                wind: {
+                    low: -60,
+                    medium: 0,
+                    high: 50,
+                }
+            },
+        };
+        const input = {
+            crop: pumpkin,
+            numCrops: 10,
+        };
+
+        const environmentFactors = {
+            sun: "low",
+        };
+        expect(getYieldForCrop(input, environmentFactors)).toBe(6);
+    });
+});
+
+describe("getYieldForCrop", () => {
+    test("Get yield for crop corn with multiple environment factors", () => {
         const corn = {
             name: "corn",
             yield: 3,
+            factor: {
+                sun: {
+                    low: -70,
+                    medium: 0,
+                    high: 70,
+                },
+                wind: {
+                    low: -60,
+                    medium: 0,
+                    high: 50,
+                }
+            },
         };
         const input = {
             crop: corn,
             numCrops: 10,
         };
-        expect(getYieldForCrop(input)).toBe(30);
+
+        const environmentFactors = {
+            sun: "low",
+            wind: "high",
+        };
+        expect(getYieldForCrop(input, environmentFactors)).toBe(13.5);
+    });
+});
+
+describe("getYieldForCrop", () => {
+    test("Get yield for crop pumpkin with multiple environment factors", () => {
+        const pumpkin = {
+            name: "pumpkin",
+            yield: 8,
+            factor: {
+                sun: {
+                    low: -70,
+                    medium: 0,
+                    high: 70,
+                },
+                wind: {
+                    low: -60,
+                    medium: 0,
+                    high: 50,
+                }
+            },
+        };
+        const input = {
+            crop: pumpkin,
+            numCrops: 21,
+        };
+
+        const environmentFactors = {
+            sun: "high",
+            wind: "low",
+        };
+        expect(getYieldForCrop(input, environmentFactors)).toBe(114.24);
     });
 });
 

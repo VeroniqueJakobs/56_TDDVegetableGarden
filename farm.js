@@ -24,9 +24,27 @@ const getYieldForPlant = (plant, environmentFactors) => {
     return plant.yield * getSunFactor/100 * getWindFactor/100;
 }
 
-const getYieldForCrop = (input) => {
-    const totalYieldForCrop = input.crop.yield * input.numCrops;
-    return totalYieldForCrop;
+const getYieldForCrop = (input, environmentFactors) => {
+       
+    if(!environmentFactors){
+        return input.crop.yield * input.numCrops
+    } 
+  
+    if(environmentFactors.sun){
+        const cropFactorSun = input.crop.factor.sun[environmentFactors.sun] ;
+        getSunFactor = 100 + cropFactorSun;
+    } else {
+        getSunFactor = 100;
+    }
+  
+    if (environmentFactors.wind){
+        const cropFactorWind = input.crop.factor.wind[environmentFactors.wind] ;
+        getWindFactor = 100 + cropFactorWind;
+    } else {
+        getWindFactor = 100;
+    }
+
+    return (input.crop.yield * input.numCrops) * getSunFactor/100 * getWindFactor/100;
 }
 
 const getTotalYield = ({crops}) => {
