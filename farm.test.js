@@ -3,7 +3,8 @@ const {
     getYieldForCrop,
     getTotalYield,
     getCostsForCrop,
-    getRevenueForCrop   
+    getRevenueForCrop,
+    getProfitForCrop    
 } = require("./farm");
 
 //getYieldForPlant
@@ -102,4 +103,26 @@ describe("getRevenueForCrop", () => {
         expect(getRevenueForCrop(crops)).toBe(192);  //12 * 4= 48  48 + 4 = 196
     });
 
+})
+
+
+//getProfitForCrop 
+describe("getProfitForCrop", () => {
+    test("Get profit for crop", () => {
+        const corn = {
+            name: "corn",
+            yield:3,
+        };
+        const crops = { crop: corn, numCrops: 10, costPerCrop:1, salesPrice:2 };
+        expect(getProfitForCrop(crops)).toBe(50);
+    });  
+
+    test("Get profit for crop", () => {
+        const pumpkin = {
+            name: "pumpkin",
+            yield:4,
+        };
+        const crops = { crop: pumpkin, numCrops: 12, costPerCrop:2, salesPrice:4 };
+        expect(getProfitForCrop(crops)).toBe(168);
+    });
 })
