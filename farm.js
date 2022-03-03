@@ -44,11 +44,25 @@ const getProfitForCrop = (crops) => {
     return profitPerCrop;
 }
 
+const getTotalProfit = ({crops}) => {
+    const eachCrop = crops.map((plant) => {
+        const getCosts = getCostsForCrop(plant);
+        const getRevenue = getRevenueForCrop(plant);
+        const profitPerCrop = getRevenue - getCosts;
+        return profitPerCrop;
+    })
+    const totalProfits = eachCrop.reduce((previousValue, currentValue) => {
+    return previousValue + currentValue;
+    });
+    return totalProfits;    
+}
+
 module.exports = {
     getYieldForPlant,
     getYieldForCrop,
     getTotalYield,
     getCostsForCrop,
     getRevenueForCrop,
-    getProfitForCrop    
+    getProfitForCrop,
+    getTotalProfit    
 };
