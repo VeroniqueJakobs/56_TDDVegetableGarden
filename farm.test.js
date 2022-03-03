@@ -449,7 +449,7 @@ describe("getTotalProfit ", () => {
             {crop: corn, numCrops: 10, costPerCrop:1, salesPrice:2},  
             {crop: pumpkin, numCrops: 12, costPerCrop:2, salesPrice:4}
         ];
-        expect(getTotalProfit({crops})).toBe(218);
+        expect(getTotalProfit(crops)).toBe(218);
     });
 })
 
