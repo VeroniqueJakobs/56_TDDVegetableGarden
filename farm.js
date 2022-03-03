@@ -27,9 +27,20 @@ const getCostsForCrop = (crops) => {
     return total;
 }
 
+const getRevenueForCrop = (crops) => {
+    const numberCrops = crops.numCrops;
+    const pricePerKiloCrop = crops.salesPrice;
+    const yieldOfCrop = crops.crop.yield;
+
+    const totalKiloCrops = numberCrops * yieldOfCrop;
+    const revenuePerCrop = totalKiloCrops * pricePerKiloCrop;
+    return revenuePerCrop;
+}
+
 module.exports = {
     getYieldForPlant,
     getYieldForCrop,
     getTotalYield,
-    getCostsForCrop 
+    getCostsForCrop,
+    getRevenueForCrop    
 };
