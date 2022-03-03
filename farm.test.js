@@ -10,13 +10,100 @@ const {
 
 //getYieldForPlant
 describe("getYieldForPlant", () => {
-    const corn = {
-        name: "corn",
-        yield: 30,
-    };
-
-    test("Get yield for plant with no environment factors", () => {
+    test("Get yield for corn without environment factors", () => {
+        const corn = {
+            name: "corn",
+            yield: 30,
+        };
         expect(getYieldForPlant(corn)).toBe(30);
+    });
+
+    test("Get yield for pumpkin without environment factors", () => {
+        const pumpkin = {
+            name: "pumpkin",
+            yield: 20,
+        };
+        expect(getYieldForPlant(pumpkin)).toBe(20);
+    });
+});
+
+describe("getYieldForPlant with environment factors", () => {
+    test("Get yield for corn with environment factors", () => {
+        const corn = {
+            name: "corn",
+            yield: 30,
+            factor: {
+                sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+                },
+            },
+        };
+        const environmentFactors = {
+        sun: "low",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(15);
+    });
+
+    test("Get yield for corn with environment factors", () => {
+        const corn = {
+            name: "corn",
+            yield: 30,
+            factor: {
+                sun: {
+                low: -60,
+                medium: 0,
+                high: 50,
+                },
+            },
+        };
+        const environmentFactors = {
+        sun: "low",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(12);
+    });
+
+    test("Get yield for corn with environment factors", () => {
+        const corn = {
+            name: "corn",
+            yield: 30,
+            factor: {
+                sun: {
+                low: -50,
+                medium: 0,
+                high: 60,
+                },
+            },
+        };
+        const environmentFactors = {
+        sun: "high",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(48);
+    });
+
+    test("Get yield for pumpkin with multiple environment factors", () => {
+        const pumpkin = {
+            name: "pumpkin",
+            yield: 40,
+            factor: {
+                sun: {
+                    low: -70,
+                    medium: 0,
+                    high: 70,
+                },
+                wind: {
+                    low: -60,
+                    medium: 0,
+                    high: 50,
+                }
+            },
+        };
+        const environmentFactors = {
+            sun: "low",
+            wind: "high",
+        };
+        expect(getYieldForPlant(pumpkin, environmentFactors)).toBe(18);
     });
 });
 
