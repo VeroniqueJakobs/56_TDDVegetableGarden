@@ -230,29 +230,50 @@ describe("getYieldForCrop", () => {
 
 //getTotalYield
 describe("getTotalYield", () => {
-    test("Calculate total yield with multiple crops", () => {
+    test("Get total yield for crops with multiple environment factors", () => {
         const corn = {
             name: "corn",
-            yield: 3,
+            yield: 8, 
+            factor: {
+                sun: {
+                    low: -70, 
+                    medium: 0,
+                    high: 70,
+                },
+                wind: {
+                    low: -60,
+                    medium: 0,
+                    high: 50,
+                }
+            }
         };
         const pumpkin = {
-            name: "pumpkin",
-            yield: 4,
-        };
+             name: "pumpkin",
+             yield: 3,
+             factor: {
+                 sun: {
+                     low: -80,
+                     medium: 0,
+                     high: 70,
+                 },
+                 wind: {
+                     low: -60,
+                     medium: 0,
+                     high: 50,
+                 }
+             },
+         };
         const crops = [
-            { crop: corn, numCrops: 5 },
-            { crop: pumpkin, numCrops: 2 },
+            {crop: corn, numCrops: 20},
+            {crop: pumpkin, numCrops: 20}
         ];
-        expect(getTotalYield({ crops })).toBe(23);
-    });
 
-    test("Calculate total yield with 0 amount", () => {
-        const corn = {
-            name: "corn",
-            yield: 3,
-        };
-        const crops = [{ crop: corn, numCrops: 0 }];
-        expect(getTotalYield({ crops })).toBe(0);
+        const environmentFactors = {
+            sun: "high", 
+           wind: "high"
+          }
+        
+        expect(getTotalYield(crops, environmentFactors)).toBe(561);
     });
 });
 
