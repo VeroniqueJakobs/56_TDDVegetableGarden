@@ -140,13 +140,36 @@ const getProfitForCrop = (crop, environmentFactors) => {
     return profitPerCrop;
 }
 
-const getTotalProfit = ({crops}) => {
-    const eachCrop = crops.map((plant) => {
-        const getCosts = getCostsForCrop(plant);
-        const getRevenue = getRevenueForCrop(plant);
-        const profitPerCrop = getRevenue - getCosts;
+const getTotalProfit = (crops, environmentFactors) => {
+
+    const eachCrop = crops.map((crop) => {
+        if(!environmentFactors){
+            const getCosts =  crop.numCrops * crop.costPerCrop;
+            const getRevenue = (crop.crop.yield * crop.numCrops) * crop.salesPrice;
+            const getProfit = getRevenue - getCosts;
+            return getProfit;
+        }
+          
+        if(environmentFactors.sun){
+            const cropFactorSun = crop.crop.factor.sun[environmentFactors.sun];
+            getSunFactor = 100 + cropFactorSun;
+        } else {
+            getSunFactor = 100;
+        }
+      
+        if (environmentFactors.wind){
+            const cropFactorWind =crop.crop.factor.wind[environmentFactors.wind] ;
+            getWindFactor = 100 + cropFactorWind;
+        } else {
+            getWindFactor = 100;
+        }
+    
+        const amountYield = (crop.crop.yield * crop.numCrops) * getSunFactor/100 * getWindFactor/100;
+        const revenuePerCrop = amountYield * crop.salesPrice;
+        const profitPerCrop = revenuePerCrop - (crop.numCrops * crop.costPerCrop);
         return profitPerCrop;
     })
+
     const totalProfits = eachCrop.reduce((previousValue, currentValue) => {
     return previousValue + currentValue;
     });
